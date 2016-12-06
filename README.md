@@ -75,6 +75,30 @@ If you didn't turn off the manifest merger from the Gradle build tools, then no 
 	if (result) {
         // Job successfully removed here
     }
+``` 
+
+## Utility Methods
+
+* To check if a job (periodic or non-periodic) is currently scheduled for a given jobID, call `SmartScheduler.contains(jobID)` method as depicted below. This method returns `true` in case a `Job` is currently scheduled for the given `jobID`, `false` otherwise.
+
+```
+    SmartScheduler jobScheduler = SmartScheduler.getInstance(getApplicationContext());
+    boolean result = jobScheduler.contains(JOB_ID);
+    
+	if (result) {
+        // Job currently scheduled
+    }    
+```
+
+* To get a scheduled Job for a given jobID, call `SmartScheduler.get(jobID)` method as depicted below. This method returns a `Job` object for the given `jobID` in case one is currently scheduled, `null` otherwise.
+
+```
+    SmartScheduler jobScheduler = SmartScheduler.getInstance(getApplicationContext());
+    Job scheduledJob = jobScheduler.get(JOB_ID);
+    
+	if (scheduledJob != null) {
+        // Valid job has been scheduled for given jobID
+    }    
 ```
 
 ## Contribute
