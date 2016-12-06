@@ -69,6 +69,16 @@ public class SmartScheduler {
     }
 
     /**
+     * Method to get Job for a given jobID
+     *
+     * @param jobId JobID for which scheduled jobs needs to be fetched
+     * @return Returns Job object for the given jobID in case one is currently scheduled, null otherwise
+     */
+    public Job get(int jobId) {
+        return scheduledJobs.get(jobId);
+    }
+
+    /**
      * Method to check if Job with give JobId exists in the SmartScheduler or not
      *
      * @param jobId
