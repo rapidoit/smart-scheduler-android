@@ -69,10 +69,21 @@ public class SmartScheduler {
     }
 
     /**
+     * Method to get Job for a given jobID
+     *
+     * @param jobId JobID for which scheduled job needs to be fetched
+     *
+     * @return Returns Job object for the given jobID in case one is currently scheduled, null otherwise
+     */
+    public Job get(int jobId) {
+        return scheduledJobs.get(jobId);
+    }
+
+    /**
      * Method to check if Job with give JobId exists in the SmartScheduler or not
      *
-     * @param jobId
-     * @return
+     * @param jobId JobID for which scheduled job needs to be checked
+     * @return Returns true in case a job is currently scheduled with the given jobID, false otherwise
      */
     public boolean contains(int jobId) {
         return scheduledJobs.containsKey(jobId);
@@ -81,8 +92,8 @@ public class SmartScheduler {
     /**
      * Method to check if Job exists in the SmartScheduler or not
      *
-     * @param job
-     * @return
+     * @param job Job which needs to be checked if it is scheduled or not
+     * @return Returns true in case given job is scheduled currently, false otherwise
      */
     public boolean contains(Job job) {
         return scheduledJobs.containsValue(job);
@@ -91,8 +102,8 @@ public class SmartScheduler {
     /**
      * Method to schedule Job based on the specified JobParams
      *
-     * @param job
-     * @return
+     * @param job Job which needs to be added
+     * @return Returns true in case given job was added successfully, false otherwise
      */
     public boolean addJob(Job job) {
         if (job == null || job.getJobId() <= 0 || job.getJobScheduledCallback() == null)
@@ -137,8 +148,8 @@ public class SmartScheduler {
     /**
      * Method to remove a job
      *
-     * @param jobId
-     * @return
+     * @param jobId Job which needs to be removed
+     * @return Returns true in case given job was removed successfully, false otherwise
      */
     public boolean removeJob(int jobId) {
 
@@ -158,8 +169,8 @@ public class SmartScheduler {
     /**
      * Method to check if the Job is valid or not
      *
-     * @param job
-     * @return
+     * @param job Job which needs to be checked to be valid or not
+     * @return Returns true in case given job is valid, false otherwise
      */
     private boolean isJobValid(Job job) {
         try {

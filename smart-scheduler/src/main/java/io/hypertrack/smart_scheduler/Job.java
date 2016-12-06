@@ -47,7 +47,8 @@ public class Job {
 
     /**
      * Method to generate unique JobId
-     * @return
+     *
+     * @return Returns a uniquely generated JobID
      */
     public static int generateJobID() {
         return (int) (System.currentTimeMillis() / 1000);
