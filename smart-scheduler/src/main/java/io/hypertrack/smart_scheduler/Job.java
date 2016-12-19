@@ -17,6 +17,7 @@ public class Job {
     private final int networkType;
     private final boolean isPeriodic;
     private final long intervalMillis;
+    private final long initialDelayInMillis;
 
     // Threshold to schedule via Handlers
     protected static final long JOB_TYPE_HANDLER_THRESHOLD = 60000;
@@ -131,6 +132,16 @@ public class Job {
         return intervalMillis;
     }
 
+    /**
+     * The interval for the initial delay (first occurrence) of the periodic job. This value is <b>not</b> set if the
+     * job does not recur periodically.
+     *
+     * @return Returns the Initial Delay (in millis) assigned to the job
+     */
+    public long getInitialDelayInMillis() {
+        return initialDelayInMillis;
+    }
+
     private Job(Job.Builder b) {
         jobId = b.mJobId;
         jobType = b.mJobType;
@@ -140,6 +151,7 @@ public class Job {
         networkType = b.mNetworkType;
         isPeriodic = b.mIsPeriodic;
         intervalMillis = b.mIntervalMillis;
+        initialDelayInMillis = b.mInitialDelayInMillis;
     }
 
     /**
@@ -162,6 +174,7 @@ public class Job {
 
         // Periodic parameters.
         private boolean mIsPeriodic = false;
+        private long mInitialDelayInMillis = 60000;
 
         /**
          * @param jobScheduledCallback The endpoint that you implement that will receive the callback from the
@@ -288,6 +301,23 @@ public class Job {
         public Builder setPeriodic(long intervalMillis) {
             mIsPeriodic = true;
             mIntervalMillis = intervalMillis;
+            mInitialDelayInMillis = intervalMillis;
+            return this;
+        }
+
+        /**
+         * Specify that this job should recur with the provided interval, not more than once per
+         * period.
+         *
+         * @param intervalMillis        Millisecond interval for which this job will repeat.
+         * @param initialDelayInMillis  Initial Delay (in millis) for the job's first occurrence.
+         *
+         * @return Returns the Builder class for currently configured Job params
+         */
+        public Builder setPeriodic(long intervalMillis, long initialDelayInMillis) {
+            mIsPeriodic = true;
+            mIntervalMillis = intervalMillis;
+            mInitialDelayInMillis = initialDelayInMillis;
             return this;
         }
 
@@ -324,6 +354,7 @@ public class Job {
                 ", networkType=" + networkType +
                 ", isPeriodic=" + isPeriodic +
                 ", intervalMillis=" + intervalMillis +
+                ", initialDelayInMillis=" + initialDelayInMillis +
                 '}';
     }
 }
