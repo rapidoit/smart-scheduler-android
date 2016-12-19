@@ -56,6 +56,8 @@ public class Job {
 
     /**
      * Unique job id associated with this class. This is assigned to your job by the scheduler.
+     *
+     * @return Returns the id assigned to the job
      */
     public int getJobId() {
         return jobId;
@@ -65,6 +67,8 @@ public class Job {
      * One of {@link Job.Type#JOB_TYPE_HANDLER},
      * {@link Job.Type#JOB_TYPE_PERIODIC_TASK}, or
      * {@link Job.Type#JOB_TYPE_ALARM}.
+     *
+     * @return Returns the type of job assigned to the job
      */
     public int getJobType() {
         return jobType;
@@ -72,6 +76,8 @@ public class Job {
 
     /**
      * Name of the callback class that will be called when Job is scheduled by the SmartScheduler.
+     *
+     * @return Returns the JobScheduled callback assigned to the job
      */
     public SmartScheduler.JobScheduledCallback getJobScheduledCallback() {
         return jobScheduledCallback;
@@ -79,6 +85,8 @@ public class Job {
 
     /**
      * Tag for the PeriodicTask to be set for {@link Job.Type#JOB_TYPE_PERIODIC_TASK} job.
+     *
+     * @return Returns the PeriodicTask tag assigned to the job
      */
     public String getPeriodicTaskTag() {
         return periodicTaskTag;
@@ -86,6 +94,8 @@ public class Job {
 
     /**
      * Whether this job needs the device to be plugged in.
+     *
+     * @return Returns the RequiresCharging flag assigned to the job
      */
     public boolean getRequiresCharging() {
         return requireCharging;
@@ -95,6 +105,8 @@ public class Job {
      * One of {@link Job.NetworkType#NETWORK_TYPE_CONNECTED},
      * {@link Job.NetworkType#NETWORK_TYPE_ANY}, or
      * {@link Job.NetworkType#NETWORK_TYPE_UNMETERED}.
+     *
+     * @return Returns the NetworkType assigned to the job
      */
     public int getNetworkType() {
         return networkType;
@@ -102,6 +114,8 @@ public class Job {
 
     /**
      * Track whether this job will repeat with a given period.
+     *
+     * @return Returns if the job isPeriodic
      */
     public boolean isPeriodic() {
         return isPeriodic;
@@ -110,6 +124,8 @@ public class Job {
     /**
      * Set to the interval between occurrences of this job. This value is <b>not</b> set if the
      * job does not recur periodically.
+     *
+     * @return Returns the Interval (in millis) assigned to the job
      */
     public long getIntervalMillis() {
         return intervalMillis;
@@ -211,6 +227,8 @@ public class Job {
          *
          * @param periodicTaskTag tag for the PeriodicTask to be set for
          *                        {@link Job.Type#JOB_TYPE_PERIODIC_TASK} job.
+         *
+         * @return Returns the Builder class for currently configured Job params
          */
         public Builder setPeriodicTaskTag(String periodicTaskTag) {
             mPeriodicTaskTag = periodicTaskTag;
@@ -223,6 +241,10 @@ public class Job {
          * {@link Job.NetworkType#NETWORK_TYPE_ANY}.
          * Bear in mind that calling this function defines network as a strict requirement for your
          * job. If the network requested is not available your job will never run.
+         *
+         * @param networkType NetworkType to be set for the job.
+         *
+         * @return Returns the Builder class for currently configured Job params
          */
         public Builder setRequiredNetworkType(int networkType) {
             mNetworkType = networkType;
@@ -234,6 +256,8 @@ public class Job {
          * false.
          *
          * @param requiresCharging Whether or not the device is plugged in.
+         *
+         * @return Returns the Builder class for currently configured Job params
          */
         public Builder setRequiresCharging(boolean requiresCharging) {
             mRequiresCharging = requiresCharging;
@@ -244,6 +268,8 @@ public class Job {
          * Specify that this job should happen only once after the provided interval has elapsed.
          *
          * @param intervalMillis Millisecond interval after which this job has to be performed.
+         *
+         * @return Returns the Builder class for currently configured Job params
          */
         public Builder setIntervalMillis(long intervalMillis) {
             mIsPeriodic = false;
@@ -256,6 +282,8 @@ public class Job {
          * period.
          *
          * @param intervalMillis Millisecond interval for which this job will repeat.
+         *
+         * @return Returns the Builder class for currently configured Job params
          */
         public Builder setPeriodic(long intervalMillis) {
             mIsPeriodic = true;
