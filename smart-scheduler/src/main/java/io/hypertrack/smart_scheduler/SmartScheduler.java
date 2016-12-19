@@ -335,10 +335,14 @@ public class SmartScheduler {
             }
         });
 
+        // Initialize JobHandler
         initializeJobHandler(jobID);
-        jobHandlers.get(jobID).post(jobRunnables.get(jobID));
 
-        Log.i(TAG, "Handler Job: " + job + " scheduled to run after " + job.getIntervalMillis() + "ms");
+        // Schedule the first instance for the job
+        long intervalInMillis = job.isPeriodic() ? job.getInitialDelayInMillis() : job.getIntervalMillis();
+        jobHandlers.get(jobID).postDelayed(jobRunnables.get(jobID), intervalInMillis);
+
+        Log.i(TAG, "Handler Job: " + job + " scheduled to run after " + intervalInMillis + "ms");
         return true;
     }
 
