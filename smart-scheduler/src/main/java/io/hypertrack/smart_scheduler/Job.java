@@ -357,4 +357,37 @@ public class Job {
                 ", initialDelayInMillis=" + initialDelayInMillis +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Job job = (Job) o;
+
+        if (jobId != job.jobId) return false;
+        if (jobType != job.jobType) return false;
+        if (requireCharging != job.requireCharging) return false;
+        if (networkType != job.networkType) return false;
+        if (isPeriodic != job.isPeriodic) return false;
+        if (intervalMillis != job.intervalMillis) return false;
+        if (initialDelayInMillis != job.initialDelayInMillis) return false;
+        if (!jobScheduledCallback.equals(job.jobScheduledCallback)) return false;
+        return periodicTaskTag.equals(job.periodicTaskTag);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = jobId;
+        result = 31 * result + jobType;
+        result = 31 * result + jobScheduledCallback.hashCode();
+        result = 31 * result + periodicTaskTag.hashCode();
+        result = 31 * result + (requireCharging ? 1 : 0);
+        result = 31 * result + networkType;
+        result = 31 * result + (isPeriodic ? 1 : 0);
+        result = 31 * result + (int) (intervalMillis ^ (intervalMillis >>> 32));
+        result = 31 * result + (int) (initialDelayInMillis ^ (initialDelayInMillis >>> 32));
+        return result;
+    }
 }
