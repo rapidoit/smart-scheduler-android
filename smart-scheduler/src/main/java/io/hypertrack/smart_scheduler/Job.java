@@ -18,6 +18,7 @@ public class Job {
     private final boolean isPeriodic;
     private final long intervalMillis;
     private final long initialDelayInMillis;
+    private final Long flexInMillis;
 
     // Threshold to schedule via Handlers
     protected static final long JOB_TYPE_HANDLER_THRESHOLD = 60000;
@@ -142,6 +143,17 @@ public class Job {
         return initialDelayInMillis;
     }
 
+    /**
+     * The Flex interval for the periodic job (how close to the end of the period set in
+     * intervalInMillis the job is supposed to be executed). This value is <b>not</b> set if the
+     * job does not recur periodically.
+     *
+     * @return Returns the Flex Interval (in millis) assigned to the job
+     */
+    public Long getFlexInMillis() {
+        return flexInMillis;
+    }
+
     private Job(Job.Builder b) {
         jobId = b.mJobId;
         jobType = b.mJobType;
@@ -152,6 +164,7 @@ public class Job {
         isPeriodic = b.mIsPeriodic;
         intervalMillis = b.mIntervalMillis;
         initialDelayInMillis = b.mInitialDelayInMillis;
+        flexInMillis = b.mFlexInMillis;
     }
 
     /**
@@ -175,6 +188,8 @@ public class Job {
         // Periodic parameters.
         private boolean mIsPeriodic = false;
         private long mInitialDelayInMillis = 60000;
+
+        private Long mFlexInMillis = null;
 
         /**
          * @param jobScheduledCallback The endpoint that you implement that will receive the callback from the
@@ -291,6 +306,19 @@ public class Job {
         }
 
         /**
+         * Specify that how close to the end of the period should this job be executed
+         * in a recur with the provided interval, not more than once per period.
+         *
+         * @param flexInMillis        Millisecond interval for which this job will repeat.
+         *
+         * @return Returns the Builder class for currently configured Job params
+         */
+        public Builder setFlex(long flexInMillis) {
+            this.mFlexInMillis = flexInMillis;
+            return this;
+        }
+
+        /**
          * Specify that this job should recur with the provided interval, not more than once per
          * period.
          *
@@ -350,11 +378,13 @@ public class Job {
                 "jobId=" + jobId +
                 ", jobType=" + jobType +
                 ", jobScheduledCallback=" + (jobScheduledCallback != null ? jobScheduledCallback : " null") +
+                ", periodicTaskTag='" + (periodicTaskTag != null ? periodicTaskTag : " null") +
                 ", requireCharging=" + requireCharging +
                 ", networkType=" + networkType +
                 ", isPeriodic=" + isPeriodic +
                 ", intervalMillis=" + intervalMillis +
                 ", initialDelayInMillis=" + initialDelayInMillis +
+                ", flexInMillis=" + (flexInMillis != null ? flexInMillis : " null") +
                 '}';
     }
 
@@ -374,7 +404,6 @@ public class Job {
         if (initialDelayInMillis != job.initialDelayInMillis) return false;
         if (!jobScheduledCallback.equals(job.jobScheduledCallback)) return false;
         return periodicTaskTag.equals(job.periodicTaskTag);
-
     }
 
     @Override
