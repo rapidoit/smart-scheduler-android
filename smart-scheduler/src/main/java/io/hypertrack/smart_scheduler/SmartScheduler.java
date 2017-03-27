@@ -379,7 +379,7 @@ public class SmartScheduler {
             bundle.putInt(SmartScheduler.PERIODIC_TASK_JOB_ID_KEY, job.getJobId());
 
             if (job.isPeriodic()) {
-                PeriodicTask task = new PeriodicTask.Builder()
+                 PeriodicTask.Builder builder = new PeriodicTask.Builder()
                         .setExtras(bundle)
                         .setService(SmartSchedulerPeriodicTaskService.class)
                         .setPeriod(job.getIntervalMillis() / 1000)
@@ -387,8 +387,12 @@ public class SmartScheduler {
                         .setRequiresCharging(job.getRequiresCharging())
                         .setPersisted(true)
                         .setTag(job.getPeriodicTaskTag())
-                        .setUpdateCurrent(true)
-                        .build();
+                        .setUpdateCurrent(true);
+
+                if (job.getFlexInMillis() != null)
+                    builder.setFlex(job.getFlexInMillis());
+
+                PeriodicTask task = builder.build();
                 GcmNetworkManager.getInstance(mContext).schedule(task);
 
                 Log.i(TAG, "PeriodicTask job: " + job + " scheduled to run at " + job.getIntervalMillis() + "ms interval");
