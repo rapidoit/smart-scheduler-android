@@ -185,7 +185,6 @@ public class SmartScheduler {
             return false;
         }
 
-        Log.e(TAG, "Job not valid: " + job);
         return false;
     }
 
@@ -341,8 +340,6 @@ public class SmartScheduler {
         // Schedule the first instance for the job
         long intervalInMillis = job.isPeriodic() ? job.getInitialDelayInMillis() : job.getIntervalMillis();
         jobHandlers.get(jobID).postDelayed(jobRunnables.get(jobID), intervalInMillis);
-
-        Log.i(TAG, "Handler Job: " + job + " scheduled to run after " + intervalInMillis + "ms");
         return true;
     }
 
@@ -395,8 +392,6 @@ public class SmartScheduler {
                 PeriodicTask task = builder.build();
                 GcmNetworkManager.getInstance(mContext).schedule(task);
 
-                Log.i(TAG, "PeriodicTask job: " + job + " scheduled to run at " + job.getIntervalMillis() + "ms interval");
-
             } else {
                 OneoffTask task = new OneoffTask.Builder()
                         .setExtras(bundle)
@@ -409,8 +404,6 @@ public class SmartScheduler {
                         .setUpdateCurrent(true)
                         .build();
                 GcmNetworkManager.getInstance(mContext).schedule(task);
-
-                Log.i(TAG, "OneoffTask job: " + job + " scheduled to run after " + job.getIntervalMillis() + "ms");
             }
 
             return true;
@@ -440,7 +433,6 @@ public class SmartScheduler {
                         job.getIntervalMillis(),
                         pendingIntent);
 
-                Log.i(TAG, "RepeatingAlarm job: " + job + " scheduled to run at " + job.getIntervalMillis() + "ms interval");
             } else {
                 long triggerInMillis = calendar.getTimeInMillis() + job.getIntervalMillis();
 
@@ -453,8 +445,6 @@ public class SmartScheduler {
                 } else {
                     alarm.set(AlarmManager.RTC_WAKEUP, triggerInMillis, pendingIntent);
                 }
-
-                Log.i(TAG, "ExactAlarm job: " + job + " scheduled to run after " + job.getIntervalMillis() + "ms");
             }
 
             return true;

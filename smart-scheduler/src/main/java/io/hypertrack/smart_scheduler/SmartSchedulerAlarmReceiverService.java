@@ -3,7 +3,6 @@ package io.hypertrack.smart_scheduler;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 /**
  * Created by piyush on 25/11/16.
@@ -27,8 +26,6 @@ public class SmartSchedulerAlarmReceiverService extends IntentService {
                 jobScheduler.onAlarmJobScheduled(jobID);
                 return;
             }
-
-            Log.e(TAG, "Error occurred while SmartSchedulerAlarmReceiverService: jobScheduler is NULL");
         }
     }
 }

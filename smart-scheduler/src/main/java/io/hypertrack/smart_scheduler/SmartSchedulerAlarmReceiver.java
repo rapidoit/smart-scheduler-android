@@ -13,7 +13,6 @@ public class SmartSchedulerAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "SmartSchedulerAlarmReceiver onReceive called");
         Intent onAlarmReceiverServiceIntent = new Intent(context, SmartSchedulerAlarmReceiverService.class);
         onAlarmReceiverServiceIntent.putExtras(intent.getExtras());
         context.startService(onAlarmReceiverServiceIntent);
