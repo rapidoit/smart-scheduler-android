@@ -387,7 +387,7 @@ public class SmartScheduler {
                         .setUpdateCurrent(true);
 
                 if (job.getFlexInMillis() != null)
-                    builder.setFlex(job.getFlexInMillis());
+                    builder.setFlex(job.getFlexInMillis() / 1000);
 
                 PeriodicTask task = builder.build();
                 GcmNetworkManager.getInstance(mContext).schedule(task);
