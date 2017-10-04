@@ -106,7 +106,7 @@ Please use the [issues tracker](https://github.com/hypertrack/smart-scheduler-an
 
 ## About HyperTrack
 Developers use HyperTrack to build location features, not infrastructure. We reduce the complexity of building and operating location features to a few APIs that just work.
-Check it out. [Sign up](https://dashboard.hypertrack.io/signup/) and start building! Join our [Slack community](http://slack.hypertrack.io) for instant responses. You can also email us at help@hypertrack.io
+Check it out. [Sign up](https://dashboard.hypertrack.com/signup/) and start building! Join our [Slack community](http://slack.hypertrack.io) for instant responses. You can also email us at help@hypertrack.io
 
 ## License
 
