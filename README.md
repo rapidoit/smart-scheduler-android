@@ -18,7 +18,7 @@ The library is available on `mavenCentral()` and `jcenter()`. In your module's `
 ```
 dependencies {
     ...
-    compile 'io.hypertrack:smart-scheduler:0.0.8'
+    compile 'io.hypertrack:smart-scheduler:0.0.11'
     ...
 }
 ```
