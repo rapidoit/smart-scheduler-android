@@ -72,7 +72,6 @@ public class SmartScheduler {
      * Method to get Job for a given jobID
      *
      * @param jobId JobID for which scheduled job needs to be fetched
-     *
      * @return Returns Job object for the given jobID in case one is currently scheduled, null otherwise
      */
     public Job get(int jobId) {
@@ -263,13 +262,16 @@ public class SmartScheduler {
     public void onPowerSaverModeChanged(boolean powerSaverModeEnabled) {
 
         Log.i(TAG, "SmartScheduler onPowerSaverModeChanged: " + powerSaverModeEnabled);
-
-        // Check if there are any valid jobs scheduled currently
         if (scheduledJobs != null && scheduledJobs.size() > 0) {
-            for (int jobID : scheduledJobs.keySet()) {
+
+            HashMap<Integer, Job> copyScheduledJobs = new HashMap<>();
+            copyScheduledJobs.putAll(scheduledJobs);
+
+            // Check if there are any valid jobs scheduled currently
+            for (int jobID : copyScheduledJobs.keySet()) {
 
                 // Check for all active PeriodicTask type jobs
-                Job job = scheduledJobs.get(jobID);
+                Job job = copyScheduledJobs.get(jobID);
                 if (job != null && (job.getJobType() == Job.Type.JOB_TYPE_PERIODIC_TASK)) {
 
                     // Remove any previous Job for this jobID
@@ -376,7 +378,7 @@ public class SmartScheduler {
             bundle.putInt(SmartScheduler.PERIODIC_TASK_JOB_ID_KEY, job.getJobId());
 
             if (job.isPeriodic()) {
-                 PeriodicTask.Builder builder = new PeriodicTask.Builder()
+                PeriodicTask.Builder builder = new PeriodicTask.Builder()
                         .setExtras(bundle)
                         .setService(SmartSchedulerPeriodicTaskService.class)
                         .setPeriod(job.getIntervalMillis() / 1000)
